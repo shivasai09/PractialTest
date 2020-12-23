@@ -1,0 +1,34 @@
+{
+  "name": "practical_test",
+  "version": "1.0.0",
+  "description": "This is the practical test for encora",
+  "main": "index.js",
+  "author": "sarapu siva sai",
+  "license": "MIT",
+  "scripts": {
+    "hot": "webpack-dev-server --mode development",
+    "start": "webpack --mode development",
+    "build": "webpack --mode production"
+  },
+  "dependencies": {
+    "bootstrap": "^4.5.3",
+    "react": "16.8.0",
+    "react-bootstrap": "^1.4.0",
+    "react-dom": "16.8.0",
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^5.2.0",
+    "redux": "^4.0.5"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.0.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^5.0.1",
+    "html-webpack-plugin": "^4.5.0",
+    "style-loader": "^2.0.0",
+    "webpack": "4.41.3",
+    "webpack-cli": "3.2.3",
+    "webpack-dev-server": "^3.10.1"
+  }
+}
