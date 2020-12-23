@@ -1,21 +1,20 @@
 import * as React from "react";
 import { Link, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
+import PublicRoute from "./PublicRoute";
+import { LoginPage } from "./LoginPage";
 
 export default class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <div>
-          <Link to="/login">user</Link>
-        </div>
         <Switch>
-          <PrivateRoute exact path="/" Component={<div>i am in home</div>} />
-          <Route
+          <PrivateRoute
             exact
-            path="/login"
-            component={() => <div> i am in login</div>}
+            path="/"
+            component={() => <div>i am in home</div>}
           />
+          <PublicRoute exact path="/login" component={LoginPage} />
         </Switch>
       </React.Fragment>
     );

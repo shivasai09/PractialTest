@@ -1,18 +1,17 @@
 import * as React from "react";
 import { Redirect, Route } from "react-router-dom";
 
-export default ({ Component, path, ...rest }) => {
+export default ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      path={path}
-      component={(props) => {
-        if (localStorage.getItem("isLoggedIn")) {
-          return <Component {...props} />;
-        } else {
-          return <Redirect to="/login" />;
-        }
-      }}
+      component={(props) =>
+        localStorage.getItem("isLoggedIn") === "true" ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/login" />
+        )
+      }
     />
   );
 };
