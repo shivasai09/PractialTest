@@ -6,11 +6,11 @@ export default class App extends React.Component {
     return (
       <React.Fragment>
         <div>
-          <Link to="/home">home</Link>
+          <Link to="/user">user</Link>
         </div>
         <Switch>
-          <Route path="/" component={() => <div>i am in home</div>} />
-          <Route path="/home" component={() => <div> i am user</div>} />
+          <Route exact path="/" component={() => <div>i am in home</div>} />
+          <Route exact path="/user" component={() => <div> i am user</div>} />
         </Switch>
       </React.Fragment>
     );

@@ -34,7 +34,6 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "public"),
     historyApiFallback: true,
-    // publicPath: path.join(__dirname, "public", "index.html"),
   },
   devtool: "source-map",
   stats: {
