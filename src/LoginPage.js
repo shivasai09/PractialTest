@@ -3,10 +3,33 @@ import Card from "react-bootstrap/Card";
 import * as React from "react";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 
 export const LoginPage = ({ history }) => {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassWord] = React.useState("");
+  const setValue = React.useCallback(
+    (event) => {
+      if (event.target.getAttribute("type") === "email") {
+        setEmail(event.target.value);
+      } else {
+        setPassWord(event.target.value);
+      }
+    },
+    [email, password]
+  );
+  const validateEmailPassWord = React.useCallback(() => {
+    if (email === "encora" && password === "interview") {
+      localStorage.setItem("isLoggedIn", "true");
+      history.push("/");
+    } else {
+      alert("wrong credentials");
+    }
+  }, [email, password]);
+  const autoFillCredentials = React.useCallback(() => {
+    setEmail("encora");
+    setPassWord("interview");
+  }, [email, password]);
   return (
     <>
       <Jumbotron bsPrefix="jumbotron d-flex justify-content-center align-items-center">
@@ -19,7 +42,12 @@ export const LoginPage = ({ history }) => {
                   Email
                 </Form.Label>
                 <Col sm={10}>
-                  <Form.Control type="email" placeholder="Email" />
+                  <Form.Control
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={setValue}
+                  />
                 </Col>
               </Form.Group>
               <Form.Group controlId="formHorizontalPassword">
@@ -27,17 +55,23 @@ export const LoginPage = ({ history }) => {
                   Password
                 </Form.Label>
                 <Col sm={10}>
-                  <Form.Control type="password" placeholder="Password" />
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={setValue}
+                  />
                 </Col>
               </Form.Group>
-              <Button
-                variant="primary"
-                onClick={() => {
-                  localStorage.setItem("isLoggedIn", "true");
-                  history.push("/");
-                }}
-              >
+              <Button variant="primary" onClick={validateEmailPassWord}>
                 Submit
+              </Button>
+              <Button
+                variant="info"
+                className="ml-3"
+                onClick={autoFillCredentials}
+              >
+                autofill credentials
               </Button>
             </Form>
           </Card.Text>
