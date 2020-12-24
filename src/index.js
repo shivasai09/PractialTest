@@ -4,11 +4,15 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
+import { store } from "./store";
+import { Provider } from "react-redux";
 
 const Index = () => (
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );
 
 ReactDom.render(<Index />, document.getElementById("content"));

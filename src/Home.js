@@ -5,8 +5,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import { add, remove } from "./actions";
 
-export const HomePage = () => {
+const HomePageC = ({ notes }) => {
   return (
     <div className="w-100 h-100 d-flex justify-content-center align-items-start ">
       <Card className="col-10  p-0 mt-5 h-75" bg="light">
@@ -22,13 +25,20 @@ export const HomePage = () => {
               className="p-0 border-right  height-overflow overflow-auto"
             >
               <ListGroup>
-                <ListGroup.Item className="rounded-0 border-top-0 border-left-0 border-right-0">
-                  <Row>
-                    <Col className="flex-grow-1 ">title</Col>
-                    <Col className="flex-grow-0 p-0 m-0">close</Col>
-                  </Row>
-                  <Row className="pl-3">description</Row>
-                </ListGroup.Item>
+                {notes &&
+                  notes.map((item, index) => (
+                    <ListGroup.Item
+                      className="rounded-0 border-top-0 border-left-0 border-right-0"
+                      eventKey={index}
+                      key={index}
+                    >
+                      <Row>
+                        <Col className="flex-grow-1 ">{item.title}</Col>
+                        <Col className="flex-grow-0 p-0 m-0">close</Col>
+                      </Row>
+                      <Row className="pl-3">{item.description}</Row>
+                    </ListGroup.Item>
+                  ))}
               </ListGroup>
             </Col>
             <Col xl={9} lg={9} md={9} sm={9} xs={9} className="p-0 pl-3 pr-3">
@@ -47,7 +57,7 @@ export const HomePage = () => {
                   <Form.Label>Body</Form.Label>
                   <Form.Control as="textarea" rows={3} />
                 </Form.Group>
-                <Button type="primary">Save</Button>
+                <Button type="primary">Add item</Button>
               </Form>
             </Col>
           </Row>
@@ -56,3 +66,15 @@ export const HomePage = () => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => ({
+  notes: state.notes,
+});
+
+const mapDisPatchToProps = (dispatch) => {
+  return {
+    actions: bindActionCreators({ add, remove }, dispatch),
+  };
+};
+
+export const HomePage = connect(mapStateToProps, mapDisPatchToProps)(HomePageC);
