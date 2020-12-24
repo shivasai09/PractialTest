@@ -9,7 +9,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { add, remove } from "./actions";
 
-const HomePageC = ({ notes, actions }) => {
+const HomePageC = ({ notes, actions, history }) => {
   const [text, setText] = React.useState("");
   const [body, setBody] = React.useState("");
   const setValue = React.useCallback(
@@ -113,6 +113,16 @@ const HomePageC = ({ notes, actions }) => {
                 }}
               >
                 Add item
+              </Button>
+              <Button
+                variant="info"
+                className="ml-3"
+                onClick={() => {
+                  localStorage.setItem("isLoggedIn", "");
+                  history.push("/");
+                }}
+              >
+                sign out
               </Button>
             </Col>
           </Row>
