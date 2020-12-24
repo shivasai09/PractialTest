@@ -9,7 +9,34 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { add, remove } from "./actions";
 
-const HomePageC = ({ notes }) => {
+const HomePageC = ({ notes, actions }) => {
+  const [text, setText] = React.useState("");
+  const [body, setBody] = React.useState("");
+  const setValue = React.useCallback(
+    (event) => {
+      if (event.target.getAttribute("name") === "title") {
+        setText(event.target.value);
+      } else {
+        setBody(event.target.value);
+      }
+    },
+    [text, body]
+  );
+  const addNotes = React.useCallback(() => {
+    if (!text) {
+      alert("add text");
+      return;
+    }
+    setText("");
+    setBody("");
+    actions.add({ title: text, description: body });
+  }, [text, body]);
+  const remove = React.useCallback(
+    (index) => {
+      actions.remove(index);
+    },
+    [body, text]
+  );
   return (
     <div className="w-100 h-100 d-flex justify-content-center align-items-start ">
       <Card className="col-10  p-0 mt-5 h-75" bg="light">
@@ -29,12 +56,21 @@ const HomePageC = ({ notes }) => {
                   notes.map((item, index) => (
                     <ListGroup.Item
                       className="rounded-0 border-top-0 border-left-0 border-right-0"
-                      eventKey={index}
                       key={index}
                     >
                       <Row>
                         <Col className="flex-grow-1 ">{item.title}</Col>
-                        <Col className="flex-grow-0 p-0 m-0">close</Col>
+                        <Col className="flex-grow-0 p-0 m-0">
+                          <Button
+                            variant="secondary"
+                            className="p-0 m-0 bg-white border-0 text-primary"
+                            onClick={() => {
+                              remove(index);
+                            }}
+                          >
+                            X
+                          </Button>
+                        </Col>
                       </Row>
                       <Row className="pl-3">{item.description}</Row>
                     </ListGroup.Item>
@@ -48,17 +84,36 @@ const HomePageC = ({ notes }) => {
                   className="mt-3 position-relative "
                 >
                   <Form.Label>Title:</Form.Label>
-                  <Form.Control type="title" />
+                  <Form.Control
+                    type="text"
+                    name="title"
+                    value={text}
+                    onChange={setValue}
+                  />
                 </Form.Group>
                 <Form.Group
                   controlId="exampleForm.ControlInput1"
                   className="position-relative "
                 >
                   <Form.Label>Body</Form.Label>
-                  <Form.Control as="textarea" rows={3} />
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    name={"body"}
+                    value={body}
+                    onChange={setValue}
+                  />
                 </Form.Group>
-                <Button type="primary">Add item</Button>
               </Form>
+              <Button
+                type="primary"
+                onClick={(e) => {
+                  e.preventDefault();
+                  addNotes();
+                }}
+              >
+                Add item
+              </Button>
             </Col>
           </Row>
         </Card.Body>

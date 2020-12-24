@@ -15,15 +15,15 @@ const initialState = [
   },
 ];
 const notes = (state = initialState, action) => {
-  switch (action) {
+  switch (action.type) {
     case "remove":
-      index = action.index;
+      const index = action.index;
       const newState = state
         .slice(0, index)
         .concat(state.slice(index + 1, state.length));
       return newState;
     case "add":
-      return [...state].push(action.item);
+      return [...state].concat([action.item]);
     default:
       return state;
   }

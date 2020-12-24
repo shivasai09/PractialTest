@@ -5,5 +5,5 @@ export const add = (item) => ({
 
 export const remove = (index) => ({
   type: "remove",
-  index,
+  index: index,
 });
